@@ -6,55 +6,9 @@
 
 /* --------------------------------------------------------
    1. CUSTOM CURSOR
+   → Handled by cursor.js (Premium Futuristic Cursor System)
    -------------------------------------------------------- */
-const cursorDot  = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
 
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
-let isHovering = false;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursorDot.style.left  = mouseX + 'px';
-  cursorDot.style.top   = mouseY + 'px';
-});
-
-// Smooth trailing cursor ring
-(function animateRing() {
-  const ease = 0.12;
-  ringX += (mouseX - ringX) * ease;
-  ringY += (mouseY - ringY) * ease;
-  cursorRing.style.left = ringX + 'px';
-  cursorRing.style.top  = ringY + 'px';
-  requestAnimationFrame(animateRing);
-})();
-
-// Enlarge ring on interactive elements
-const interactiveEls = 'a, button, .skill-card, .project-card, .project-card-featured, .chip, .social-link, input, textarea';
-document.addEventListener('mouseover', (e) => {
-  if (e.target.matches(interactiveEls) || e.target.closest(interactiveEls)) {
-    cursorRing.classList.add('hovered');
-    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-  }
-});
-document.addEventListener('mouseout', (e) => {
-  if (e.target.matches(interactiveEls) || e.target.closest(interactiveEls)) {
-    cursorRing.classList.remove('hovered');
-    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-  }
-});
-
-// Hide cursor when leaving window
-document.addEventListener('mouseleave', () => {
-  cursorDot.style.opacity = '0';
-  cursorRing.style.opacity = '0';
-});
-document.addEventListener('mouseenter', () => {
-  cursorDot.style.opacity = '1';
-  cursorRing.style.opacity = '1';
-});
 
 
 /* --------------------------------------------------------
