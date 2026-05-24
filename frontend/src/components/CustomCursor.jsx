@@ -1,137 +1,167 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-/* ─── Color palette ────────────────────────────────────── */
-const C = {
-  purple: '#9B5ED6',
-  purpleDark: '#7B3DB8',
-  pink: '#F0539A',
-  pinkBright: '#FF3D8F',
-  orange: '#F5A020',
-  orangeLight: '#FFC046',
-};
+/* ── Palette ──────────────────────────────────── */
+const DARK    = '#1a1e2e';
+const DARK2   = '#252a3c';
+const DARK3   = '#2f364a';
+const WRAP_LT = '#d4e8f0';  // light handle wrap
+const WRAP_DK = '#9ab8cc';  // dark handle wrap
+const GOLD    = '#c8a83a';
+const GOLD_HI = '#f0d060';
+const STRING  = '#252a3c';
 
-/* ─── Normal arrow cursor SVG ──────────────────────────── *
- * Hotspot is the very top-left of this SVG (the arrow tip) */
-function ArrowSVG() {
+/* ─────────────────────────────────────────────────────────
+   DEFAULT  — slingshot, ball at rest
+   Hotspot at the ring/tip (top-left of SVG)
+   ───────────────────────────────────────────────────────── */
+function SlingshotDefault() {
   return (
-    <svg
-      width="62"
-      height="78"
-      viewBox="0 0 62 78"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* ── Purple main arrow body (large diagonal pill) ── */}
-      <ellipse
-        cx="16" cy="30"
-        rx="13.5" ry="32"
-        fill={C.purple}
-        transform="rotate(-28 16 30)"
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+
+      {/* ── Handle (drawn first, sits behind everything) ───── */}
+      {/* Solid base */}
+      <rect x="-3" y="-5" width="46" height="11" rx="5.5"
+            fill={WRAP_LT}
+            transform="rotate(42 38 50) translate(0 0)"
+            style={{ transformOrigin: '38px 50px' }}
       />
-      {/* ── Darker purple highlight on top edge ── */}
-      <ellipse
-        cx="14" cy="26"
-        rx="7" ry="18"
-        fill={C.purpleDark}
-        opacity="0.35"
-        transform="rotate(-28 14 26)"
-      />
-      {/* ── Pink overlay pill (narrower, shifted right) ── */}
-      <ellipse
-        cx="24" cy="32"
-        rx="10.5" ry="27"
-        fill={C.pink}
-        transform="rotate(-28 24 32)"
-      />
-      {/* ── Orange bottom blob (the "heel") ── */}
-      <ellipse
-        cx="8" cy="54"
-        rx="10" ry="7.5"
-        fill={C.orange}
-        transform="rotate(-15 8 54)"
+      {/* Wrapping segments using individual rects */}
+      {Array.from({ length: 9 }).map((_, i) => (
+        <rect key={i}
+              x={-3 + i * 5} y={-5}
+              width="3.5" height="11"
+              rx="1"
+              fill={i % 2 === 0 ? WRAP_LT : WRAP_DK}
+              transform="rotate(42 38 50)"
+        />
+      ))}
+      {/* Handle outline */}
+      <rect x="-3" y="-5" width="46" height="11" rx="5.5"
+            stroke={DARK} strokeWidth="1.5" fill="none"
+            transform="rotate(42 38 50)"
       />
 
-      {/* ── Dripping dots ── */}
-      {/* Big purple dot */}
-      <circle cx="40" cy="54" r="5.5" fill={C.purple} />
-      {/* Big pink dot */}
-      <circle cx="50" cy="61" r="4.5" fill={C.pink} />
-      {/* Orange dot */}
-      <circle cx="46" cy="69" r="3.5" fill={C.orange} />
-      {/* Small orange */}
-      <circle cx="56" cy="53" r="2.5" fill={C.orange} />
-      {/* Small purple */}
-      <circle cx="55" cy="68" r="2" fill={C.purple} />
-      {/* Tiny pink */}
-      <circle cx="38" cy="67" r="2" fill={C.pink} />
-      {/* Tiny orange */}
-      <circle cx="60" cy="62" r="1.5" fill={C.orangeLight} />
+      {/* ── 5 parallel strings ──────────────────────────────── */}
+      {[-3.5, -1.75, 0, 1.75, 3.5].map((off, i) => (
+        <line key={i}
+              x1={18 + off * 0.7} y1={30}
+              x2={30 + off * 0.5} y2={53}
+              stroke={STRING} strokeWidth="1.15"
+              opacity="0.85"
+        />
+      ))}
+
+      {/* ── Fork stem (centre spine from ring to ball) ──────── */}
+      <path d="M18 29 L30 54"
+            stroke={DARK} strokeWidth="5"
+            strokeLinecap="round" />
+
+      {/* ── Left prong ─────────────────────────────────────── */}
+      <path d="M13 29 Q6 22 9 13 Q11 5 18 5"
+            stroke={DARK} strokeWidth="4.5"
+            strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+
+      {/* ── Right prong ─────────────────────────────────────── */}
+      <path d="M23 27 Q30 20 27 11 Q24 4 18 5"
+            stroke={DARK} strokeWidth="4.5"
+            strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+
+      {/* ── Circular ring / guide wheel ─────────────────────── */}
+      {/* Outer ring */}
+      <circle cx="18" cy="14" r="10" stroke={DARK} strokeWidth="3.5" fill="none"/>
+      {/* Inner fill */}
+      <circle cx="18" cy="14" r="6"  fill={DARK2}/>
+      {/* Inner ring detail */}
+      <circle cx="18" cy="14" r="3"  fill={DARK3}/>
+      {/* Spoke lines */}
+      <line x1="18" y1="7"  x2="18" y2="21" stroke={DARK2} strokeWidth="1.3"/>
+      <line x1="11" y1="14" x2="25" y2="14" stroke={DARK2} strokeWidth="1.3"/>
+      {/* Outer ring highlight */}
+      <path d="M11 10 Q14 5 20 6" stroke={DARK3} strokeWidth="1.5" fill="none" opacity="0.5"/>
+
+      {/* ── Golden ball ─────────────────────────────────────── */}
+      <circle cx="30" cy="55" r="5.5" fill={GOLD}/>
+      {/* Highlight */}
+      <circle cx="28" cy="53" r="2.5" fill={GOLD_HI} opacity="0.6"/>
+      {/* Outline */}
+      <circle cx="30" cy="55" r="5.5" stroke={DARK} strokeWidth="0.8" fill="none"/>
     </svg>
   );
 }
 
-/* ─── Hover finger cursor SVG ──────────────────────────── *
- * Hotspot is the finger tip, offset via parent transform   */
-function FingerSVG() {
+/* ─────────────────────────────────────────────────────────
+   HOVER  — ball pulled back, strings taut & angled
+   ───────────────────────────────────────────────────────── */
+function SlingshotHover() {
   return (
-    <svg
-      width="70"
-      height="82"
-      viewBox="0 0 70 82"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* ── Purple palm / hand base (large blob) ── */}
-      <ellipse
-        cx="24" cy="48"
-        rx="17" ry="22"
-        fill={C.purple}
-        transform="rotate(-8 24 48)"
-      />
-      {/* ── Purple highlight ── */}
-      <ellipse
-        cx="18" cy="44"
-        rx="9" ry="13"
-        fill={C.purpleDark}
-        opacity="0.3"
-        transform="rotate(-8 18 44)"
-      />
-      {/* ── Pink pointing finger (tall vertical pill) ── */}
-      <ellipse
-        cx="33" cy="22"
-        rx="11" ry="26"
-        fill={C.pink}
-        transform="rotate(10 33 22)"
-      />
-      {/* ── Pink highlight on finger ── */}
-      <ellipse
-        cx="30" cy="16"
-        rx="5.5" ry="14"
-        fill={C.pinkBright}
-        opacity="0.4"
-        transform="rotate(10 30 16)"
-      />
-      {/* ── Orange accent blob at bottom ── */}
-      <ellipse
-        cx="12" cy="60"
-        rx="11" ry="8"
-        fill={C.orange}
-        transform="rotate(-5 12 60)"
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+
+      {/* ── Handle ──────────────────────────────────────────── */}
+      {Array.from({ length: 9 }).map((_, i) => (
+        <rect key={i}
+              x={-3 + i * 5} y={-5}
+              width="3.5" height="11"
+              rx="1"
+              fill={i % 2 === 0 ? WRAP_LT : WRAP_DK}
+              transform="rotate(42 38 50)"
+        />
+      ))}
+      <rect x="-3" y="-5" width="46" height="11" rx="5.5"
+            stroke={DARK} strokeWidth="1.5" fill="none"
+            transform="rotate(42 38 50)"
       />
 
-      {/* ── Scattered dots (more spread out for hover) ── */}
-      <circle cx="50" cy="58" r="5.5" fill={C.purple} />
-      <circle cx="59" cy="65" r="4.5" fill={C.pink} />
-      <circle cx="55" cy="73" r="3.5" fill={C.orange} />
-      <circle cx="64" cy="56" r="2.5" fill={C.orange} />
-      <circle cx="62" cy="70" r="2" fill={C.pink} />
-      <circle cx="46" cy="71" r="2" fill={C.purple} />
-      <circle cx="66" cy="63" r="1.5" fill={C.orangeLight} />
+      {/* ── Taut strings — pulled toward lower-right ────────── */}
+      {[-3.5, -1.75, 0, 1.75, 3.5].map((off, i) => (
+        <line key={i}
+              x1={18 + off * 0.7} y1={30}
+              x2={44 + off * 0.4} y2={62}
+              stroke={STRING} strokeWidth="1.2"
+              opacity="0.9"
+        />
+      ))}
+
+      {/* ── Fork stem ────────────────────────────────────────── */}
+      <path d="M18 29 L44 63"
+            stroke={DARK} strokeWidth="5"
+            strokeLinecap="round"/>
+
+      {/* ── Left prong ──────────────────────────────────────── */}
+      <path d="M13 29 Q6 22 9 13 Q11 5 18 5"
+            stroke={DARK} strokeWidth="4.5"
+            strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+
+      {/* ── Right prong ─────────────────────────────────────── */}
+      <path d="M23 27 Q30 20 27 11 Q24 4 18 5"
+            stroke={DARK} strokeWidth="4.5"
+            strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+
+      {/* ── Ring ─────────────────────────────────────────────── */}
+      <circle cx="18" cy="14" r="10" stroke={DARK} strokeWidth="3.5" fill="none"/>
+      <circle cx="18" cy="14" r="6"  fill={DARK2}/>
+      <circle cx="18" cy="14" r="3"  fill={DARK3}/>
+      <line x1="18" y1="7"  x2="18" y2="21" stroke={DARK2} strokeWidth="1.3"/>
+      <line x1="11" y1="14" x2="25" y2="14" stroke={DARK2} strokeWidth="1.3"/>
+      <path d="M11 10 Q14 5 20 6" stroke={DARK3} strokeWidth="1.5" fill="none" opacity="0.5"/>
+
+      {/* ── Ball pulled back — glowing slightly ─────────────── */}
+      {/* Glow aura */}
+      <circle cx="46" cy="64" r="9" fill={GOLD} opacity="0.18"/>
+      {/* Ball */}
+      <circle cx="46" cy="64" r="5.5" fill={GOLD}/>
+      {/* Highlight */}
+      <circle cx="44" cy="62" r="2.5" fill={GOLD_HI} opacity="0.7"/>
+      {/* Outline */}
+      <circle cx="46" cy="64" r="5.5" stroke={DARK} strokeWidth="0.8" fill="none"/>
     </svg>
   );
 }
 
-/* ─── Main component ───────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────
+   MAIN COMPONENT
+   ───────────────────────────────────────────────────────── */
 export default function CustomCursor() {
   const cursorRef = useRef(null);
   const [isHover, setIsHover] = useState(false);
@@ -139,7 +169,7 @@ export default function CustomCursor() {
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    // Only show on mouse (fine pointer) devices
+    // Touch / coarse-pointer devices → skip entirely
     if (!window.matchMedia('(pointer: fine)').matches) {
       setIsTouch(true);
       return;
@@ -148,9 +178,8 @@ export default function CustomCursor() {
     const el = cursorRef.current;
 
     const onMove = (e) => {
-      // Position the cursor element
       el.style.left = e.clientX + 'px';
-      el.style.top = e.clientY + 'px';
+      el.style.top  = e.clientY + 'px';
       if (!visible) setVisible(true);
     };
 
@@ -158,25 +187,25 @@ export default function CustomCursor() {
       const interactive = e.target.closest(
         'a, button, [role="button"], input, textarea, select, label, ' +
         '.btn, .chip, .skill-card-new, .project-card, .social-link, ' +
-        '.project-link-btn, .nav-link, .nav-cta, .hamburger, .mobile-nav-link, ' +
-        '.form-submit, .back-to-top'
+        '.project-link-btn, .nav-link, .nav-cta, .hamburger, ' +
+        '.mobile-nav-link, .form-submit, .back-to-top'
       );
       setIsHover(!!interactive);
     };
 
-    const onLeave = () => { el.style.opacity = '0'; };
-    const onEnter = () => { el.style.opacity = '1'; };
+    const onLeaveWin  = () => { el.style.opacity = '0'; };
+    const onEnterWin  = () => { if (visible) el.style.opacity = '1'; };
 
     window.addEventListener('mousemove', onMove, { passive: true });
     document.addEventListener('mouseover', onOver);
-    document.documentElement.addEventListener('mouseleave', onLeave);
-    document.documentElement.addEventListener('mouseenter', onEnter);
+    document.documentElement.addEventListener('mouseleave', onLeaveWin);
+    document.documentElement.addEventListener('mouseenter', onEnterWin);
 
     return () => {
       window.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseover', onOver);
-      document.documentElement.removeEventListener('mouseleave', onLeave);
-      document.documentElement.removeEventListener('mouseenter', onEnter);
+      document.documentElement.removeEventListener('mouseleave', onLeaveWin);
+      document.documentElement.removeEventListener('mouseenter', onEnterWin);
     };
   }, [visible]);
 
@@ -187,23 +216,21 @@ export default function CustomCursor() {
       ref={cursorRef}
       aria-hidden="true"
       style={{
-        position: 'fixed',
-        /* Start off-screen until first mousemove */
-        left: '-200px',
-        top: '-200px',
-        pointerEvents: 'none',
-        zIndex: 99999,
-        opacity: visible ? 1 : 0,
-        transition: 'opacity 0.25s ease',
-        /* Shift so the arrow TIP (top-left) or FINGER TIP is at mouse */
-        transform: isHover ? 'translate(-28px, -4px)' : 'translate(-2px, -2px)',
-        filter: 'drop-shadow(0px 6px 16px rgba(0,0,0,0.30))',
-        willChange: 'left, top',
-        /* Smooth between cursor states */
-        transition: 'opacity 0.25s ease, transform 0.2s ease',
+        position:     'fixed',
+        left:         '-200px',
+        top:          '-200px',
+        pointerEvents:'none',
+        zIndex:       99999,
+        opacity:      visible ? 1 : 0,
+        /* The ring tip of the slingshot is ~(8, 4) in the SVG;
+           shift so that point sits exactly at the mouse hotspot */
+        transform:    'translate(-8px, -4px)',
+        filter:       'drop-shadow(0 4px 10px rgba(0,0,0,0.45))',
+        willChange:   'left, top',
+        transition:   'opacity 0.25s ease',
       }}
     >
-      {isHover ? <FingerSVG /> : <ArrowSVG />}
+      {isHover ? <SlingshotHover /> : <SlingshotDefault />}
     </div>
   );
 }
