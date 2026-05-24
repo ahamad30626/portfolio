@@ -1115,14 +1115,65 @@ footer {
 }
 
 /* ════════════════════════════════════════════
-   CUSTOM BLOB CURSOR  (SVG — fine-pointer only)
+   CUSTOM CURSOR  (desktop / fine-pointer only)
    ════════════════════════════════════════════ */
+.cursor-dot {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent-1);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  /* Use translate for positioning (set via JS) */
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.3s ease;
+  mix-blend-mode: normal;
+  will-change: left, top;
+}
 
-/* The blob cursor is a positioned div rendered by React (CustomCursor.jsx).
-   It contains inline SVG for the arrow (default) and finger (hover) states.
-   No extra CSS classes needed — all styling is inline in the component.   */
+.cursor-dot.cursor-visible {
+  opacity: 1;
+}
 
-/* Safety net: hide any leftover dot/ring elements on touch screens */
+.cursor-ring {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(99,102,241,0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.3s ease;
+  will-change: left, top;
+}
+
+.cursor-ring.cursor-visible {
+  opacity: 1;
+}
+
+/* Hover states */
+.cursor-dot.hovering {
+  width: 14px;
+  height: 14px;
+  background: var(--accent-3);
+  box-shadow: 0 0 12px rgba(6,182,212,0.6);
+}
+.cursor-ring.hovering {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(6,182,212,0.7);
+  background: rgba(6,182,212,0.05);
+}
+
+/* Hide cursors on touch devices */
 @media (pointer: coarse) {
   .cursor-dot, .cursor-ring { display: none !important; }
 }
