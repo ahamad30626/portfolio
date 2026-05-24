@@ -8,7 +8,7 @@ export default function About() {
           <div className="about-img-wrapper reveal-left">
             <div className="profile-glow" aria-hidden="true" />
             <div className="profile-frame">
-              <img src="/profile.png" alt="Shaik — Frontend Developer" className="profile-img" loading="lazy" />
+              <img src="/profile.png" alt="Ahamad — Frontend Developer" className="profile-img" loading="lazy" />
             </div>
             <div className="profile-badge badge-available" aria-label="Available for work">
               Available for Work

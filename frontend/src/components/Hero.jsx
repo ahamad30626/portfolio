@@ -46,8 +46,8 @@ export default function Hero() {
         <div className="hero-content">
           <p className="hero-greeting">👋&nbsp; Hi there, I'm</p>
 
-          <h1 className="hero-name" aria-label="Shaik">
-            <span className="word">Shaik</span>
+          <h1 className="hero-name" aria-label="Ahamad">
+            <span className="word">Ahamad</span>
           </h1>
 
           <div className="hero-role-wrapper" aria-live="polite">
