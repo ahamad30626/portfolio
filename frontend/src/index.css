@@ -1283,8 +1283,7 @@ footer {
   .stat-label { font-size: 0.65rem; }
 
   /* Skills */
-  .skills-grid-new { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .skill-card-inner { padding: 16px 10px; }
+  .skills-pills-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
 
   /* Section titles */
   .section-title { font-size: 1.7rem; }
@@ -1305,3 +1304,214 @@ footer {
   .social-row { gap: 12px; }
   .social-link { width: 44px; height: 44px; }
 }
+
+/* ════════════════════════════════════════════
+   HERO META (location + availability)
+   ════════════════════════════════════════════ */
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.hero-meta-dot { color: var(--text-muted); font-size: 1rem; }
+.hero-meta-item.available {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #10b981;
+  font-weight: 500;
+}
+.availability-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.35); }
+}
+
+/* ════════════════════════════════════════════
+   CURRENTLY LEARNING (About section)
+   ════════════════════════════════════════════ */
+.currently-learning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 1.5rem 0;
+  padding: 14px 16px;
+  background: rgba(99,102,241,0.07);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: var(--radius-sm);
+}
+.cl-icon { font-size: 1.25rem; line-height: 1.5; }
+.cl-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-1);
+  margin-bottom: 3px;
+}
+.cl-value {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* ════════════════════════════════════════════
+   GITHUB STATS IMAGES (About + Skills)
+   ════════════════════════════════════════════ */
+.github-stats-wrap {
+  margin: 1.5rem 0 1rem;
+}
+.github-stats-img {
+  border-radius: var(--radius-sm);
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+}
+.skills-github-streak {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+.github-streak-img {
+  border-radius: var(--radius-sm);
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+}
+
+/* ════════════════════════════════════════════
+   SKILL PILLS (replaces ring chart)
+   ════════════════════════════════════════════ */
+.skills-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 1rem;
+}
+@media (max-width: 640px) {
+  .skills-pills-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.skill-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.skill-pill-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--pill-color, var(--accent-1));
+  transform: translateY(-2px);
+}
+.skill-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.skill-pill-name {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.skill-category-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ════════════════════════════════════════════
+   PROJECT ENHANCEMENTS
+   ════════════════════════════════════════════ */
+.project-tagline {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--accent-1);
+  margin: 0 0 0.6rem;
+  font-weight: 500;
+}
+.project-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0.75rem 0;
+  padding: 8px 12px;
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: #6ee7b7;
+  line-height: 1.4;
+}
+.project-result-icon { font-size: 0.9rem; flex-shrink: 0; }
+.project-featured-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: rgba(99,102,241,0.85);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+.projects-more { margin-top: 3rem; }
+
+/* ════════════════════════════════════════════
+   CONTACT DIRECT EMAIL
+   ════════════════════════════════════════════ */
+.contact-direct-email {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+.contact-email-link {
+  color: var(--accent-1);
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.contact-email-link:hover {
+  border-color: var(--accent-1);
+}
+
+/* ════════════════════════════════════════════
+   SECTION ALTERNATING BG (visual rhythm)
+   ════════════════════════════════════════════ */
+#skills, #contact {
+  background: rgba(255,255,255,0.015);
+}
+
+/* ════════════════════════════════════════════
+   PREFERS-REDUCED-MOTION ACCESSIBILITY
+   ════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .blob, .availability-dot, .cursor-dot, .cursor-ring { animation: none !important; }
+}
+

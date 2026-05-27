@@ -44,20 +44,31 @@ export default function Hero() {
 
       <div className="container">
         <div className="hero-content">
-          <p className="hero-greeting">👋&nbsp; Hi there, I'm</p>
+          <p className="hero-greeting">Hey, I'm</p>
 
           <h1 className="hero-name" aria-label="Ahamad">
             <span className="word">Ahamad</span>
           </h1>
 
           <div className="hero-role-wrapper" aria-live="polite">
-            <span className="typewriter-prefix">I'm a&nbsp;</span>
+            <span className="typewriter-prefix">I build&nbsp;</span>
             <span ref={typeRef} id="typewriter" aria-label="Animated role text" />
           </div>
 
+          {/* Location + availability */}
+          <div className="hero-meta">
+            <span className="hero-meta-item">📍 India</span>
+            <span className="hero-meta-dot" aria-hidden="true">·</span>
+            <span className="hero-meta-item available">
+              <span className="availability-dot" aria-hidden="true" />
+              Open to internships & freelance
+            </span>
+          </div>
+
           <p className="hero-description">
-            I design and build <strong>high-performance web experiences</strong> that are beautiful,
-            accessible, and memorable. Turning complex problems into elegant, pixel-perfect interfaces.
+            I build full-stack web apps with <strong>React</strong> &amp; <strong>Spring Boot</strong> —
+            fast, accessible, and built to actually work in production.
+            Currently a student developer shipping side projects and sharpening my CS fundamentals.
           </p>
 
           <div className="hero-buttons">

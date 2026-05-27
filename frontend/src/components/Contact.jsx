@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { submitContact } from '../services/api';
 
 const SOCIAL_LINKS = [
@@ -12,7 +12,7 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: 'https://linkedin.com',
+    href: 'https://linkedin.com/in/ahamad-shaik',
     label: 'LinkedIn',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -21,8 +21,8 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: 'https://twitter.com',
-    label: 'Twitter',
+    href: 'https://twitter.com/ahamad_dev',
+    label: 'Twitter / X',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -30,7 +30,7 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: 'mailto:shaik@example.com',
+    href: 'mailto:ahamad30626@gmail.com',
     label: 'Email',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -81,9 +81,9 @@ export default function Contact() {
     setLoading(true);
     try {
       const res = await submitContact(form);
-      showToast(res.message || 'Message sent! I\'ll be in touch soon. 🚀', 'success');
+      showToast(res.message || "Message sent! I'll be in touch soon. 🚀", 'success');
       setForm({ name: '', email: '', subject: '', message: '' });
-    } catch (err) {
+    } catch {
       showToast('Oops! Something went wrong. Please try again.', 'error');
     } finally {
       setLoading(false);
@@ -133,15 +133,26 @@ export default function Contact() {
             </button>
           </form>
 
+          {/* Social links */}
           <div className="social-row reveal delay-4" role="list" aria-label="Social media links">
             {SOCIAL_LINKS.map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+              <a key={s.label} href={s.href}
+                target={s.href.startsWith('mailto') ? '_self' : '_blank'}
+                rel="noopener noreferrer"
                 className="social-link" data-label={s.label} role="listitem"
                 aria-label={`${s.label} profile`} title={s.label}>
                 {s.icon}
               </a>
             ))}
           </div>
+
+          {/* Visible email — makes you reachable without filling the form */}
+          <p className="contact-direct-email reveal delay-4">
+            Or reach me directly at{' '}
+            <a href="mailto:ahamad30626@gmail.com" className="contact-email-link">
+              ahamad30626@gmail.com
+            </a>
+          </p>
         </div>
       </div>
 
