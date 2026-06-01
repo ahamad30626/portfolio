@@ -50,11 +50,31 @@ const STATIC_PROJECTS = [
     githubUrl: 'https://github.com/ahamad30626',
     featured: false,
   },
+  {
+    id: 5,
+    title: 'Blood Banking System',
+    tagline: 'Full-stack healthcare platform for blood donation and inventory management',
+    description: 'Built a centralized system that connects donors, hospitals, and blood banks through a single platform. Features donor registration, blood request management, real-time inventory tracking, role-based authentication, and an admin dashboard to ensure efficient blood availability.',
+    result: 'Real-time blood stock monitoring across blood types with role-based donor & hospital workflows',
+    imageUrl: '/project4.png',
+    tags: ['React', 'Node.js', 'Express.js', 'MongoDB', 'JWT', 'Tailwind CSS'],
+    demoUrl: 'https://github.com/ahamad30626',
+    githubUrl: 'https://github.com/ahamad30626',
+    featured: false,
+    accentColor: '#ef4444',
+  },
 ];
 
+
 function ProjectCard({ project, delay }) {
+  const accent = project.accentColor || null;
+
   return (
-    <article className={`project-card reveal delay-${delay}`} aria-label={`Project: ${project.title}`}>
+    <article
+      className={`project-card reveal delay-${delay}`}
+      aria-label={`Project: ${project.title}`}
+      style={accent ? { '--card-accent': accent } : {}}
+    >
       <div className="project-img-wrapper">
         {project.imageUrl ? (
           <>
@@ -64,18 +84,28 @@ function ProjectCard({ project, delay }) {
         ) : (
           <div className="project-emoji-wrapper" aria-hidden="true"><span>⚡</span></div>
         )}
-        {/* Featured badge only on first project */}
+        {/* Featured badge — first project only */}
         {project.id === 1 && (
           <span className="project-featured-badge" aria-label="Featured project">⭐ Featured</span>
+        )}
+        {/* Healthcare badge — blood banking project */}
+        {project.accentColor && (
+          <span className="project-domain-badge" style={{ background: `${project.accentColor}cc` }} aria-label="Healthcare project">
+            🩸 Healthcare
+          </span>
         )}
       </div>
       <div className="project-card-body">
         <h3 className="project-title">{project.title}</h3>
-        <p className="project-tagline">{project.tagline}</p>
+        <p className="project-tagline" style={accent ? { color: accent } : {}}>{project.tagline}</p>
         <p className="project-desc">{project.description}</p>
 
         {/* Result / impact */}
-        <div className="project-result" aria-label="Project result">
+        <div
+          className="project-result"
+          aria-label="Project result"
+          style={accent ? { background: `${accent}10`, borderColor: `${accent}33`, color: '#fca5a5' } : {}}
+        >
           <span className="project-result-icon" aria-hidden="true">📈</span>
           <span>{project.result}</span>
         </div>
@@ -90,6 +120,7 @@ function ProjectCard({ project, delay }) {
             rel="noopener noreferrer"
             className="project-link-btn demo"
             aria-label={`Live demo of ${project.title}`}
+            style={accent ? { background: `linear-gradient(135deg, ${accent}, #b91c1c)` } : {}}
           >
             Live Demo ↗
           </a>
@@ -107,6 +138,7 @@ function ProjectCard({ project, delay }) {
     </article>
   );
 }
+
 
 export default function Projects() {
   const [projects, setProjects] = useState(STATIC_PROJECTS);
