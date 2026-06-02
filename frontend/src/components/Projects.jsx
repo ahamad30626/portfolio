@@ -4,12 +4,12 @@ import { fetchProjects } from '../services/api';
 const STATIC_PROJECTS = [
   {
     id: 1,
-    title: 'NeuralChat AI',
-    tagline: 'Real-time AI chat with token-by-token GPT-4 streaming',
-    description: 'Most AI chat UIs buffer the full response before showing anything. I wanted the opposite — instant token streaming that feels like the AI is thinking in front of you. Built with React + Node.js + Server-Sent Events.',
-    result: 'Reduced perceived response latency by ~60% vs buffered responses',
+    title: 'SecureSync AI',
+    tagline: 'AI-powered parametric income insurance for delivery partners',
+    description: 'Built an AI-driven income protection platform for Swiggy and Zomato delivery partners. The system continuously monitors weather, AQI, flood alerts, and civil disruptions — automatically triggering payouts when workers lose income due to external events. Eliminates claims entirely through real-time monitoring, ML-powered risk assessment, and instant UPI payouts.',
+    result: 'Automatic payouts within minutes using real-time weather, AQI & disruption monitoring — zero claim filing required',
     imageUrl: '/project1.png',
-    tags: ['React', 'OpenAI API', 'Node.js', 'WebSockets', 'Dark Mode UI'],
+    tags: ['Next.js', 'TypeScript', 'FastAPI', 'Python', 'PostgreSQL', 'XGBoost', 'Razorpay', 'Docker'],
     demoUrl: 'https://github.com/ahamad30626',
     githubUrl: 'https://github.com/ahamad30626',
     featured: true,
