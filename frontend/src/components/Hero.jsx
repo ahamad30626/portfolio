@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 const ROLES = [
-  'Frontend Developer',
-  'React Specialist',
+  'Frontend React Developer',
+  'React & Next.js Specialist',
   'UI/UX Enthusiast',
-  'Full Stack Engineer',
+  'Component Architecture Expert',
   'Open Source Contributor',
 ];
 
@@ -66,9 +66,9 @@ export default function Hero() {
           </div>
 
           <p className="hero-description">
-            I build full-stack web apps with <strong>React</strong> &amp; <strong>Spring Boot</strong> —
-            fast, accessible, and built to actually work in production.
-            Currently a student developer shipping side projects and sharpening my CS fundamentals.
+            I craft pixel-perfect, high-performance interfaces with <strong>React</strong> &amp; <strong>Next.js</strong> —
+            focusing on responsive design, smooth animations, and seamless API integration.
+            Currently a student developer building real-world UI experiences and mastering modern frontend patterns.
           </p>
 
           <div className="hero-buttons">

@@ -1,45 +1,57 @@
 import { useEffect, useRef, useState } from 'react';
-import { fetchSkills } from '../services/api';
 
-// Honest, credibility-first skill groupings — NO fake percentages
+// Frontend-only skill groupings — honest, no fake percentages
 const STATIC_SKILLS = [
   {
-    category: 'Frontend',
+    category: 'Core Frontend',
     icon: 'code',
     description: 'What I reach for first',
     skills: [
-      { name: 'React',          iconColor: '#61DAFB', abbr: 'Re' },
-      { name: 'TypeScript',     iconColor: '#3178C6', abbr: 'TS' },
-      { name: 'JavaScript',     iconColor: '#F7DF1E', abbr: 'JS' },
-      { name: 'Tailwind CSS',   iconColor: '#06B6D4', abbr: 'TW' },
-      { name: 'Next.js',        iconColor: '#ffffff', abbr: 'Nx' },
-      { name: 'Framer Motion',  iconColor: '#ffffff', abbr: 'FM' },
+      { name: 'React.js',      iconColor: '#61DAFB' },
+      { name: 'Next.js',       iconColor: '#ffffff' },
+      { name: 'JavaScript',    iconColor: '#F7DF1E' },
+      { name: 'TypeScript',    iconColor: '#3178C6' },
+      { name: 'HTML5',         iconColor: '#E34F26' },
+      { name: 'CSS3',          iconColor: '#1572B6' },
     ],
   },
   {
-    category: 'Backend',
-    icon: 'server',
-    description: 'Building and growing',
+    category: 'Styling & UI',
+    icon: 'palette',
+    description: 'Crafting beautiful, responsive interfaces',
     skills: [
-      { name: 'Node.js',     iconColor: '#5FA04E', abbr: 'No' },
-      { name: 'Spring Boot', iconColor: '#6DB33F', abbr: 'SB' },
-      { name: 'PostgreSQL',  iconColor: '#4169E1', abbr: 'PG' },
-      { name: 'MongoDB',     iconColor: '#47A248', abbr: 'MG' },
-      { name: 'Redis',       iconColor: '#DC382D', abbr: 'Rd' },
-      { name: 'REST APIs',   iconColor: '#6366F1', abbr: 'AP' },
+      { name: 'Tailwind CSS',     iconColor: '#06B6D4' },
+      { name: 'Bootstrap',        iconColor: '#7952B3' },
+      { name: 'Framer Motion',    iconColor: '#ffffff' },
+      { name: 'Responsive Design',iconColor: '#6366F1' },
+      { name: 'CSS Animations',   iconColor: '#F43F5E' },
+      { name: 'Figma',            iconColor: '#F24E1E' },
     ],
   },
   {
-    category: 'Tools & DevOps',
+    category: 'State & Architecture',
+    icon: 'layers',
+    description: 'Scalable component patterns',
+    skills: [
+      { name: 'Redux Toolkit',  iconColor: '#764ABC' },
+      { name: 'Context API',    iconColor: '#61DAFB' },
+      { name: 'React Query',    iconColor: '#FF4154' },
+      { name: 'Custom Hooks',   iconColor: '#06B6D4' },
+      { name: 'Vite',           iconColor: '#646CFF' },
+      { name: 'REST API Integration', iconColor: '#10B981' },
+    ],
+  },
+  {
+    category: 'Tools & Workflow',
     icon: 'tools',
     description: 'Part of my daily workflow',
     skills: [
-      { name: 'Git',    iconColor: '#F05032', abbr: 'Gt' },
-      { name: 'Docker', iconColor: '#2496ED', abbr: 'Dk' },
-      { name: 'Figma',  iconColor: '#F24E1E', abbr: 'Fi' },
-      { name: 'Linux',  iconColor: '#FCC624', abbr: 'Lx' },
-      { name: 'AWS',    iconColor: '#FF9900', abbr: 'AW' },
-      { name: 'CI/CD',  iconColor: '#6366F1', abbr: 'CI' },
+      { name: 'Git & GitHub',   iconColor: '#F05032' },
+      { name: 'VS Code',        iconColor: '#007ACC' },
+      { name: 'Chrome DevTools',iconColor: '#4285F4' },
+      { name: 'Lighthouse',     iconColor: '#F59E0B' },
+      { name: 'npm / pnpm',     iconColor: '#CB3837' },
+      { name: 'Vercel',         iconColor: '#ffffff' },
     ],
   },
 ];
@@ -50,9 +62,16 @@ const CATEGORY_ICONS = {
       <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
     </svg>
   ),
-  server: (
+  palette: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-      <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+      <circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/>
+      <circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+    </svg>
+  ),
+  layers: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
     </svg>
   ),
   tools: (
@@ -63,9 +82,10 @@ const CATEGORY_ICONS = {
 };
 
 const CATEGORY_ICON_CLASS = {
-  code: 'frontend-icon',
-  server: 'backend-icon',
-  tools: 'tools-icon',
+  code:    'frontend-icon',
+  palette: 'frontend-icon',
+  layers:  'backend-icon',
+  tools:   'tools-icon',
 };
 
 function SkillPill({ skill }) {
@@ -83,17 +103,8 @@ function SkillPill({ skill }) {
 }
 
 export default function Skills() {
-  const [categories, setCategories] = useState(STATIC_SKILLS);
+  const [categories] = useState(STATIC_SKILLS);
   const spotlightRef = useRef(null);
-
-  useEffect(() => {
-    fetchSkills()
-      .then(data => {
-        // Only replace if backend returns the expected shape
-        if (Array.isArray(data) && data.length > 0) setCategories(data);
-      })
-      .catch(() => { /* use static fallback */ });
-  }, []);
 
   // Mouse follow spotlight
   useEffect(() => {
@@ -119,12 +130,12 @@ export default function Skills() {
         <div className="skills-header">
           <span className="section-label reveal" style={{ justifyContent: 'center' }}>Tech Stack</span>
           <h2 className="section-title skills-section-title reveal delay-1">
-            Tools I Work With
+            My Frontend Toolkit
             <span className="title-underline-bar" aria-hidden="true" />
           </h2>
           <p className="skills-subtitle reveal delay-2">
-            Things I actually use — grouped by what I'm confident in vs still growing.
-            No made-up percentages.
+            Technologies I use to craft fast, accessible, and beautiful user interfaces.
+            Grouped by what I'm confident in vs still growing.
           </p>
         </div>
 

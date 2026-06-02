@@ -26,27 +26,26 @@ export default function About() {
 
             <p className="about-bio reveal delay-2">
               I started coding in 2021 — not from a bootcamp or a college syllabus, but from pure curiosity.
-              I wanted to understand <em>why</em> websites worked the way they did, so I opened DevTools
+              I wanted to understand <em>why</em> websites looked and felt the way they did, so I opened DevTools
               one night and never really closed it.
             </p>
             <p className="about-bio reveal delay-2">
-              I'm a student developer who ships things in the evenings. I care deeply about{' '}
-              <strong>performance</strong>, clean APIs, and interfaces that feel obvious to use.
-              I get unreasonably excited when an animation lands perfectly or an API feels intuitive
-              in hindsight.
+              I specialise in building <strong>modern React applications</strong> — component-driven,
+              responsive, and optimised for real users. I care deeply about
+              {' '}<strong>UI performance</strong>, accessible interfaces, and experiences that just
+              <em> feel</em> right on every device.
             </p>
             <p className="about-bio reveal delay-2">
-              My goal is to work on products real people actually use — not apps that demo well
-              and break in production. I'm currently open to{' '}
-              <strong>internships and freelance projects</strong> where I can contribute meaningfully.
+              My goal is to craft interfaces that real people love using — not just apps that look good
+              in screenshots. I'm currently open to{' '}
+              <strong>frontend internships and freelance projects</strong> where design and engineering meet.
             </p>
 
-            {/* Currently Learning */}
             <div className="currently-learning reveal delay-3" aria-label="Currently learning">
               <span className="cl-icon">📚</span>
               <div>
                 <span className="cl-label">Currently Learning</span>
-                <span className="cl-value">System Design · DSA · Spring Boot internals</span>
+                <span className="cl-value">Advanced React Patterns · Next.js App Router · Web Animations API · Accessibility (WCAG)</span>
               </div>
             </div>
 
@@ -76,9 +75,9 @@ export default function About() {
               />
             </div>
 
-            {/* Tech chips */}
+            {/* Tech chips — frontend only */}
             <div className="skills-chips reveal delay-4" aria-label="Tech skills">
-              {['React', 'TypeScript', 'Node.js', 'Spring Boot', 'Tailwind CSS', 'PostgreSQL', 'Docker', 'Git'].map(c => (
+              {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'JavaScript', 'Redux', 'Framer Motion', 'Git'].map(c => (
                 <span key={c} className="chip">{c}</span>
               ))}
             </div>
