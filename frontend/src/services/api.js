@@ -1,17 +1,18 @@
-import axios from 'axios';
-
+// API service — only functions actively used by components are kept
 const API_BASE = 'http://localhost:8080/api';
 
-const api = axios.create({
-  baseURL: API_BASE,
-  timeout: 10000,
-  headers: { 'Content-Type': 'application/json' },
-});
+const request = async (path, options = {}) => {
+  const res = await fetch(`${API_BASE}${path}`, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+};
 
-export const fetchProjects = () => api.get('/projects').then(r => r.data);
-export const fetchSkills = () => api.get('/skills').then(r => r.data);
-export const fetchExperience = () => api.get('/experience').then(r => r.data);
-export const submitContact = (data) => api.post('/contact', data).then(r => r.data);
-export const fetchHealth = () => api.get('/health').then(r => r.data);
+// Used by: Projects.jsx
+export const fetchProjects = () => request('/projects');
 
-export default api;
+// Used by: Contact.jsx
+export const submitContact = (data) =>
+  request('/contact', { method: 'POST', body: JSON.stringify(data) });

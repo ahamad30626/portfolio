@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { fetchExperience } from '../services/api';
+import { useState } from 'react';
 
 const STATIC_EXP = [
   {
@@ -72,13 +71,7 @@ function TimelineItem({ exp, index }) {
 }
 
 export default function Experience() {
-  const [experience, setExperience] = useState(STATIC_EXP);
-
-  useEffect(() => {
-    fetchExperience()
-      .then(setExperience)
-      .catch(() => { /* use static fallback */ });
-  }, []);
+  const [experience] = useState(STATIC_EXP);
 
   return (
     <section id="experience" aria-label="Experience section">

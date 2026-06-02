@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { fetchProjects } from '../services/api';
+import { useState } from 'react';
 
 const STATIC_PROJECTS = [
   {
@@ -64,9 +63,6 @@ const STATIC_PROJECTS = [
     accentColor: '#ef4444',
   },
 ];
-
-
-
 function ProjectCard({ project, delay }) {
   const accent = project.accentColor || null;
 
@@ -142,13 +138,7 @@ function ProjectCard({ project, delay }) {
 
 
 export default function Projects() {
-  const [projects, setProjects] = useState(STATIC_PROJECTS);
-
-  useEffect(() => {
-    fetchProjects()
-      .then(setProjects)
-      .catch(() => { /* use static fallback */ });
-  }, []);
+  const [projects] = useState(STATIC_PROJECTS);
 
   return (
     <section id="projects" aria-label="Projects section">

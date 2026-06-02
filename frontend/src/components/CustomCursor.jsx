@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
+// Detect touch device outside component to avoid setState-in-effect lint error
+const IS_TOUCH = !window.matchMedia('(pointer: fine)').matches;
+
 export default function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
@@ -7,26 +10,19 @@ export default function CustomCursor() {
   const ring = useRef({ x: -200, y: -200 });
   const rafRef = useRef(null);
   const [visible, setVisible] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    // Detect touch/mobile device — skip cursor entirely
-    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-    if (!hasFinePointer) {
-      setIsTouch(true);
-      return;
-    }
+    // Skip cursor setup on touch/mobile devices
+    if (IS_TOUCH) return;
 
     const dot = dotRef.current;
     const ringEl = ringRef.current;
-
-    const onFirstMove = () => setVisible(true);
 
     const onMove = (e) => {
       pos.current = { x: e.clientX, y: e.clientY };
       dot.style.left = e.clientX + 'px';
       dot.style.top = e.clientY + 'px';
-      if (!visible) setVisible(true);
+      setVisible(true);
     };
 
     const animate = () => {
@@ -37,17 +33,17 @@ export default function CustomCursor() {
       rafRef.current = requestAnimationFrame(animate);
     };
 
+    const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, .project-card, .chip, .social-link, .project-link-btn, .nav-link, .nav-cta, .hamburger';
+
     const onEnter = (e) => {
-      const t = e.target;
-      if (t.closest('a, button, [role="button"], input, textarea, select, .skill-card-new, .project-card, .chip, .social-link, .project-link-btn, .nav-link, .nav-cta, .hamburger')) {
+      if (e.target.closest(INTERACTIVE)) {
         dot.classList.add('hovering');
         ringEl.classList.add('hovering');
       }
     };
 
     const onLeave = (e) => {
-      const t = e.target;
-      if (t.closest('a, button, [role="button"], input, textarea, select, .skill-card-new, .project-card, .chip, .social-link, .project-link-btn, .nav-link, .nav-cta, .hamburger')) {
+      if (e.target.closest(INTERACTIVE)) {
         dot.classList.remove('hovering');
         ringEl.classList.remove('hovering');
       }
@@ -64,7 +60,6 @@ export default function CustomCursor() {
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
-    window.addEventListener('mousemove', onFirstMove, { once: true });
     document.addEventListener('mouseover', onEnter);
     document.addEventListener('mouseout', onLeave);
     document.documentElement.addEventListener('mouseleave', onMouseLeaveWindow);
@@ -81,8 +76,8 @@ export default function CustomCursor() {
     };
   }, []);
 
-  // Don't render on touch/mobile
-  if (isTouch) return null;
+  // Don't render cursor elements on touch/mobile
+  if (IS_TOUCH) return null;
 
   return (
     <>
