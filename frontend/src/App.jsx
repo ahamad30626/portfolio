@@ -1,64 +1,48 @@
-import { useEffect } from 'react';
 import CustomCursor from './components/CustomCursor';
 import ParticleCanvas from './components/ParticleCanvas';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Skills from './components/Skills';
+import CurrentlyBuilding from './components/CurrentlyBuilding';
 import Projects from './components/Projects';
-import Experience from './components/Experience';
+import LearningJourney from './components/LearningJourney';
+import Skills from './components/Skills';
+import GitHubActivity from './components/GitHubActivity';
+import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
-import { useScrollReveal } from './hooks/useScrollReveal';
 import './index.css';
 
 export default function App() {
-  useScrollReveal();
-
-  // Re-run reveal on any DOM changes (e.g., after API data loads)
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const elements = document.querySelectorAll('.reveal:not(.visible), .reveal-left:not(.visible), .reveal-right:not(.visible)');
-      elements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          el.classList.add('visible');
-        }
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <>
-      {/* Premium cursor */}
+    <div className="relative min-h-screen bg-[#08090f]">
       <CustomCursor />
-
-      {/* Particle background */}
       <ParticleCanvas />
-
-      {/* Navigation */}
       <Navbar />
 
-      {/* Main content */}
-      <main>
+      <main className="relative z-10">
         <Hero />
-        <div className="section-divider" aria-hidden="true" />
+        <hr className="section-sep" />
         <About />
-        <div className="section-divider" aria-hidden="true" />
-        <Skills />
-        <div className="section-divider" aria-hidden="true" />
+        <hr className="section-sep" />
+        <CurrentlyBuilding />
+        <hr className="section-sep" />
         <Projects />
-        <div className="section-divider" aria-hidden="true" />
-        <Experience />
-        <div className="section-divider" aria-hidden="true" />
+        <hr className="section-sep" />
+        <LearningJourney />
+        <hr className="section-sep" />
+        <Skills />
+        <hr className="section-sep" />
+        <GitHubActivity />
+        <hr className="section-sep" />
+        <Achievements />
+        <hr className="section-sep" />
         <Contact />
       </main>
 
       <Footer />
       <BackToTop />
-    </>
+    </div>
   );
 }
