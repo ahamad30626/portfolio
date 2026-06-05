@@ -1,76 +1,10 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-
-const TERMINAL_LINES = [
-  { prompt: true,  text: 'whoami' },
-  { prompt: false, text: 'Salam Ahamad Shaik — CS Student & Frontend Developer', dim: true },
-  { prompt: true,  text: 'cat status.json' },
-  { prompt: false, text: '{', dim: true },
-  { prompt: false, text: '  "open_to": "SWE internships & junior roles",', green: true },
-  { prompt: false, text: '  "focus":   "React · TypeScript · DSA · System Design",', green: true },
-  { prompt: false, text: '  "location": "India",', green: true },
-  { prompt: false, text: '  "available": true', green: true },
-  { prompt: false, text: '}', dim: true },
-];
-
-function TerminalPanel() {
-  const [shown, setShown] = useState(0);
-
-  useEffect(() => {
-    if (shown >= TERMINAL_LINES.length) return;
-    const t = setTimeout(() => setShown(s => s + 1), shown === 0 ? 400 : 180);
-    return () => clearTimeout(t);
-  }, [shown]);
-
-  return (
-    <div className="bg-[#0c0d14] border border-white/[0.08] rounded-xl overflow-hidden shadow-card">
-      {/* Window chrome */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-[#0e101a]">
-        <span className="w-3 h-3 rounded-full bg-red-500/60" />
-        <span className="w-3 h-3 rounded-full bg-amber-500/60" />
-        <span className="w-3 h-3 rounded-full bg-emerald-500/60" />
-        <span className="ml-3 font-mono text-xs text-slate-500">~/portfolio — zsh</span>
-      </div>
-
-      {/* Terminal body */}
-      <div className="p-5 font-mono text-[13px] leading-relaxed space-y-0.5 min-h-[200px]">
-        {TERMINAL_LINES.slice(0, shown).map((line, i) => (
-          <div key={i} className={
-            line.prompt ? 'flex items-center gap-2' :
-            line.green  ? 'text-emerald-400/90 pl-2' :
-            'text-slate-500 pl-2'
-          }>
-            {line.prompt && <span className="text-indigo-400 select-none">❯</span>}
-            <span className={line.prompt ? 'text-slate-200' : ''}>
-              {line.text}
-            </span>
-          </div>
-        ))}
-        {shown < TERMINAL_LINES.length && (
-          <div className="flex items-center gap-2">
-            <span className="text-indigo-400">❯</span>
-            <span className="w-2 h-4 bg-indigo-400/70 blink" />
-          </div>
-        )}
-        {shown >= TERMINAL_LINES.length && (
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-indigo-400">❯</span>
-            <span className="w-2 h-4 bg-indigo-400/70 blink" />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default function Hero() {
   return (
     <section id="hero" className="min-h-screen flex items-center pt-14" aria-label="Hero section">
       <div className="max-w-5xl mx-auto px-6 py-20 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-          {/* Left — text */}
-          <div>
+        <div className="max-w-2xl">
             <motion.p
               className="font-mono text-xs text-indigo-400 tracking-widest uppercase mb-4"
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
@@ -158,29 +92,6 @@ export default function Hero() {
                 Available for internships &amp; frontend roles — <span className="text-slate-300">India &amp; Remote</span>
               </span>
             </motion.div>
-          </div>
-
-          {/* Right — terminal */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <TerminalPanel />
-
-            {/* Quick stats below terminal */}
-            <div className="mt-4 grid grid-cols-3 gap-3">
-              {[
-                { n: '5+',  l: 'Projects Built' },
-                { n: '3+',  l: 'Years Learning' },
-                { n: 'CSE', l: 'B.Tech Degree' },
-              ].map(s => (
-                <div key={s.l} className="bg-[#0e101a] border border-white/[0.06] rounded-lg px-3 py-3 text-center">
-                  <div className="text-lg font-bold text-indigo-400 font-mono">{s.n}</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{s.l}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
         </div>
       </div>
     </section>
