@@ -1,187 +1,102 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
-const TERMINAL_LINES = [
-  { prompt: true,  text: 'whoami' },
-  { prompt: false, text: 'Salam Ahamad Shaik — CS Student & Frontend Developer', dim: true },
-  { prompt: true,  text: 'cat status.json' },
-  { prompt: false, text: '{', dim: true },
-  { prompt: false, text: '  "open_to": "SWE internships & junior roles",', green: true },
-  { prompt: false, text: '  "focus":   "React · TypeScript · DSA · System Design",', green: true },
-  { prompt: false, text: '  "location": "India",', green: true },
-  { prompt: false, text: '  "available": true', green: true },
-  { prompt: false, text: '}', dim: true },
+const ROLES = [
+  'Frontend React Developer',
+  'React & Next.js Specialist',
+  'UI/UX Enthusiast',
+  'Component Architecture Expert',
+  'Open Source Contributor',
 ];
 
-function TerminalPanel() {
-  const [shown, setShown] = useState(0);
+export default function Hero() {
+  const typeRef = useRef(null);
 
   useEffect(() => {
-    if (shown >= TERMINAL_LINES.length) return;
-    const t = setTimeout(() => setShown(s => s + 1), shown === 0 ? 400 : 180);
-    return () => clearTimeout(t);
-  }, [shown]);
+    let roleIdx = 0, charIdx = 0, deleting = false;
+    let timer;
+
+    const type = () => {
+      const el = typeRef.current;
+      if (!el) return;
+      const word = ROLES[roleIdx];
+
+      if (!deleting) {
+        el.textContent = word.slice(0, ++charIdx);
+        if (charIdx === word.length) { deleting = true; timer = setTimeout(type, 1800); return; }
+      } else {
+        el.textContent = word.slice(0, --charIdx);
+        if (charIdx === 0) { deleting = false; roleIdx = (roleIdx + 1) % ROLES.length; }
+      }
+      timer = setTimeout(type, deleting ? 50 : 80);
+    };
+
+    timer = setTimeout(type, 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="bg-[#0c0d14] border border-white/[0.08] rounded-xl overflow-hidden shadow-card">
-      {/* Window chrome */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-[#0e101a]">
-        <span className="w-3 h-3 rounded-full bg-red-500/60" />
-        <span className="w-3 h-3 rounded-full bg-amber-500/60" />
-        <span className="w-3 h-3 rounded-full bg-emerald-500/60" />
-        <span className="ml-3 font-mono text-xs text-slate-500">~/portfolio — zsh</span>
+    <section id="hero" aria-label="Hero section">
+      <div className="hero-bg-blobs" aria-hidden="true">
+        <div className="blob blob-1" />
+        <div className="blob blob-2" />
+        <div className="blob blob-3" />
       </div>
 
-      {/* Terminal body */}
-      <div className="p-5 font-mono text-[13px] leading-relaxed space-y-0.5 min-h-[200px]">
-        {TERMINAL_LINES.slice(0, shown).map((line, i) => (
-          <div key={i} className={
-            line.prompt ? 'flex items-center gap-2' :
-            line.green  ? 'text-emerald-400/90 pl-2' :
-            'text-slate-500 pl-2'
-          }>
-            {line.prompt && <span className="text-indigo-400 select-none">❯</span>}
-            <span className={line.prompt ? 'text-slate-200' : ''}>
-              {line.text}
+      <div className="container">
+        <div className="hero-content">
+          <p className="hero-greeting">Hey, I'm</p>
+
+          <h1 className="hero-name" aria-label="Ahamad">
+            <span className="word">Ahamad</span>
+          </h1>
+
+          <div className="hero-role-wrapper" aria-live="polite">
+            <span className="typewriter-prefix">I build&nbsp;</span>
+            <span ref={typeRef} id="typewriter" aria-label="Animated role text" />
+          </div>
+
+          {/* Location + availability */}
+          <div className="hero-meta">
+            <span className="hero-meta-item">📍 India</span>
+            <span className="hero-meta-dot" aria-hidden="true">·</span>
+            <span className="hero-meta-item available">
+              <span className="availability-dot" aria-hidden="true" />
+              Open to internships & freelance
             </span>
           </div>
-        ))}
-        {shown < TERMINAL_LINES.length && (
-          <div className="flex items-center gap-2">
-            <span className="text-indigo-400">❯</span>
-            <span className="w-2 h-4 bg-indigo-400/70 blink" />
+
+          <p className="hero-description">
+            I craft pixel-perfect, high-performance interfaces with <strong>React</strong> &amp; <strong>Next.js</strong> —
+            focusing on responsive design, smooth animations, and seamless API integration.
+            Currently a student developer building real-world UI experiences and mastering modern frontend patterns.
+          </p>
+
+          <div className="hero-buttons">
+            <a
+              href="#projects"
+              className="btn btn-primary"
+              id="hero-cta-work"
+              onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+              View My Work
+            </a>
+            <a href="https://drive.google.com/file/d/1GuprfBP4TYeouOslvQg7SXZb9DwLSHcw/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn btn-outline" id="hero-cta-resume" aria-label="View resume PDF">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download Resume
+            </a>
           </div>
-        )}
-        {shown >= TERMINAL_LINES.length && (
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-indigo-400">❯</span>
-            <span className="w-2 h-4 bg-indigo-400/70 blink" />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default function Hero() {
-  return (
-    <section id="hero" className="min-h-screen flex items-center pt-14" aria-label="Hero section">
-      <div className="max-w-5xl mx-auto px-6 py-20 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-          {/* Left — text */}
-          <div>
-            <motion.p
-              className="font-mono text-xs text-indigo-400 tracking-widest uppercase mb-4"
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-            >
-              Hello, world 👋
-            </motion.p>
-
-            <motion.h1
-              className="text-4xl sm:text-5xl font-bold text-slate-50 leading-tight mb-4"
-              initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              I'm <span className="text-indigo-400">Ahamad</span>
-            </motion.h1>
-
-            <motion.p
-              className="text-lg text-slate-300 font-medium mb-3"
-              initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              Frontend React Developer · CS Student
-            </motion.p>
-
-            <motion.p
-              className="text-slate-400 leading-relaxed mb-8 max-w-lg"
-              initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              I build fast, accessible React applications with a strong emphasis on
-              clean component architecture, responsive design, and smooth user experiences.
-              Currently pursuing B.Tech in CSE and actively looking for
-              <span className="text-slate-300"> SWE internships</span>.
-            </motion.p>
-
-            <motion.div
-              className="flex flex-wrap gap-3"
-              initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <a
-                href="#projects"
-                onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg transition-colors"
-                id="hero-view-work"
-              >
-                View My Work
-              </a>
-              <a
-                href="https://github.com/ahamad30626"
-                target="_blank" rel="noopener noreferrer"
-                className="px-5 py-2.5 border border-white/10 hover:border-white/20 text-slate-300 hover:text-slate-100 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
-                aria-label="GitHub Profile"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/salam-ahamad-shaik-634686346/"
-                target="_blank" rel="noopener noreferrer"
-                className="px-5 py-2.5 border border-white/10 hover:border-white/20 text-slate-300 hover:text-slate-100 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
-                aria-label="LinkedIn Profile"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                LinkedIn
-              </a>
-              <a
-                href="mailto:2300030626cseh1@gmail.com"
-                className="px-5 py-2.5 border border-white/10 hover:border-white/20 text-slate-300 hover:text-slate-100 text-sm font-medium rounded-lg transition-colors"
-                aria-label="Send Email"
-              >
-                Email Me
-              </a>
-            </motion.div>
-
-            {/* Availability badge */}
-            <motion.div
-              className="mt-8 flex items-center gap-2.5"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
-              </span>
-              <span className="text-sm text-slate-400">
-                Available for internships &amp; frontend roles — <span className="text-slate-300">India &amp; Remote</span>
-              </span>
-            </motion.div>
-          </div>
-
-          {/* Right — terminal */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <TerminalPanel />
-
-            {/* Quick stats below terminal */}
-            <div className="mt-4 grid grid-cols-3 gap-3">
-              {[
-                { n: '5+',  l: 'Projects Built' },
-                { n: '3+',  l: 'Years Learning' },
-                { n: 'CSE', l: 'B.Tech Degree' },
-              ].map(s => (
-                <div key={s.l} className="bg-[#0e101a] border border-white/[0.06] rounded-lg px-3 py-3 text-center">
-                  <div className="text-lg font-bold text-indigo-400 font-mono">{s.n}</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{s.l}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
         </div>
+      </div>
+
+      <div className="hero-scroll-indicator" aria-hidden="true">
+        <div className="scroll-mouse" />
+        <span>Scroll</span>
       </div>
     </section>
   );

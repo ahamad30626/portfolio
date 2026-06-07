@@ -1,250 +1,177 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
-const fade = (delay = 0) => ({
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, delay },
-  viewport: { once: true, margin: '-60px' },
-});
-
-const PROJECTS = [
+const STATIC_PROJECTS = [
   {
     id: 1,
     title: 'SecureSync AI',
-    subtitle: 'AI-powered income insurance dashboard for delivery partners',
-    image: '/project1.png',
-    featured: true,
-    status: 'Hackathon Project',
-    description:
-      'Designed and built a responsive dashboard that visualises real-time weather alerts, AQI data, and payout status for Swiggy/Zomato delivery partners. The concept: when a worker\u2019s route becomes unsafe due to weather or civil unrest, payouts trigger automatically \u2014 no claims filed. My contribution was the entire frontend: live data panels, animated risk gauges, and a mobile-first PWA layout.',
-    challenge:
-      'Representing live, multi-signal data (weather + AQI + disruption alerts) on a single screen without overwhelming the user. Solved with a priority-based alert system and collapsed card states.',
-    features: [
-      'Mobile-first PWA with offline-ready shell',
-      'Live weather & AQI monitoring panels',
-      'Animated risk gauge components (Chart.js)',
-      'Auto-payout notification toasts',
-      'Role-based dashboard views (partner / admin)',
-    ],
+    tagline: 'AI-powered income insurance dashboard for delivery partners',
+    description: 'Designed and built a responsive React dashboard that visualises real-time weather alerts, AQI data, and payout status for delivery partners. Focused on intuitive data presentation, live status indicators, animated chart components, and a mobile-first PWA layout optimised for field workers.',
+    result: 'Mobile-first PWA with live alert panels, animated risk gauges, and instant payout notification UI',
+    imageUrl: '/project1.png',
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React Query', 'Chart.js', 'PWA'],
-    github: 'https://github.com/ahamad30626',
-    demo: 'https://github.com/ahamad30626',
-    accent: 'indigo',
+    demoUrl: 'https://github.com/ahamad30626',
+    githubUrl: 'https://github.com/ahamad30626',
+    featured: true,
   },
   {
     id: 2,
-    title: 'Blood Banking System',
-    subtitle: 'Healthcare management UI with real-time inventory tracking',
-    image: '/project4.png',
+    title: 'ShopVerse E-Commerce',
+    tagline: 'Pixel-perfect e-commerce UI with smooth checkout experience',
+    description: 'Built a fully responsive e-commerce front-end with product listing, filtering, cart state management via Redux, and an animated multi-step checkout flow. Integrated REST APIs for live product data, implemented optimistic UI updates, and tuned Lighthouse performance scores above 95.',
+    result: 'Lighthouse performance score 95+, smooth animated checkout, fully responsive across all breakpoints',
+    imageUrl: '/project2.png',
+    tags: ['Next.js', 'TypeScript', 'Redux Toolkit', 'Tailwind CSS', 'REST API'],
+    demoUrl: 'https://github.com/ahamad30626',
+    githubUrl: 'https://github.com/ahamad30626',
     featured: false,
-    status: 'Course Project',
-    description:
-      'Built the complete frontend for a blood banking platform handling three user roles: donors, hospitals, and admins. Each role gets a custom dashboard view. The admin panel shows blood type inventory as animated gauges, hospitals submit requests through a multi-step form, and donors register and track their history.',
-    challenge:
-      'Managing three completely different UX flows (donor, hospital, admin) in one React app without it becoming a tangled mess. Used React Router v6 with nested layouts and role-based route guards.',
-    features: [
-      'Role-based dashboard (donor / hospital / admin)',
-      'Animated blood stock gauges per blood type',
-      'Multi-step request workflow with form validation',
-      'Donor registration with real-time eligibility check UI',
-      'Fully responsive admin panel',
-    ],
-    tags: ['React', 'Tailwind CSS', 'React Hook Form', 'Chart.js', 'REST API'],
-    github: 'https://github.com/ahamad30626',
-    demo: 'https://github.com/ahamad30626',
-    accent: 'red',
-    accentColor: '#ef4444',
   },
   {
     id: 3,
-    title: 'ShopVerse',
-    subtitle: 'E-commerce storefront with cart, filtering, and checkout flow',
-    image: '/project2.png',
+    title: 'ConnectSphere Social',
+    tagline: 'Real-time social feed UI with live messaging and stories',
+    description: 'Designed and implemented the complete UI for a social platform — real-time message threads, animated post feed with infinite scroll, story carousel, notification badge system, and a full OAuth login flow. Focused on smooth transitions, accessible markup, and efficient component re-rendering.',
+    result: 'Sub-100ms UI updates with WebSocket integration, accessible ARIA markup, smooth 60fps animations',
+    imageUrl: '/project3.png',
+    tags: ['React', 'TypeScript', 'Framer Motion', 'WebSocket Client', 'Context API'],
+    demoUrl: 'https://github.com/ahamad30626',
+    githubUrl: 'https://github.com/ahamad30626',
     featured: false,
-    status: 'Personal Project',
-    description:
-      'A fully responsive e-commerce front-end — not another tutorial todo app. Product listing with category/price filters, a Redux-managed cart with optimistic updates, and an animated multi-step checkout. Focused on getting the details right: skeleton loaders, empty states, error boundaries, and Lighthouse performance above 95.',
-    challenge:
-      'Cart state that persists across refreshes, stays in sync with quantity updates, and handles out-of-stock edge cases gracefully — without the code becoming a Redux nightmare.',
-    features: [
-      'Product grid with live filter + search',
-      'Redux Toolkit cart with localStorage persistence',
-      'Animated multi-step checkout (3 steps)',
-      'Skeleton loading states for all async data',
-      'Lighthouse score 95+ (performance & accessibility)',
-    ],
-    tags: ['Next.js', 'TypeScript', 'Redux Toolkit', 'Tailwind CSS', 'REST API'],
-    github: 'https://github.com/ahamad30626',
-    demo: 'https://github.com/ahamad30626',
-    accent: 'indigo',
   },
   {
     id: 4,
-    title: 'ConnectSphere',
-    subtitle: 'Social platform UI with live feeds, stories, and messaging',
-    image: '/project3.png',
+    title: 'DevFlow CLI Tool',
+    tagline: 'Interactive CLI with rich terminal UI for project scaffolding',
+    description: 'Built an interactive command-line tool with a rich terminal UI — animated spinners, colour-coded prompts, progress bars, and formatted output tables. Focused on intuitive UX within the terminal environment, consistent visual feedback, and a clean user interaction flow.',
+    result: 'Saves ~15 mins of project setup with guided interactive prompts and visual progress feedback',
+    imageUrl: '',
+    tags: ['Node.js', 'TypeScript', 'Inquirer.js', 'Chalk', 'CLI UX'],
+    demoUrl: 'https://github.com/ahamad30626',
+    githubUrl: 'https://github.com/ahamad30626',
     featured: false,
-    status: 'Personal Project',
-    description:
-      'Implemented the complete frontend for a social platform — real-time message threads, animated post feed with infinite scroll, story carousel, and notification badge system. The goal was to understand WebSocket client integration deeply, not just use it as a black box.',
-    challenge:
-      'Keeping the feed performant with 100+ posts while messages update in real-time. Used React.memo, virtualised list rendering, and debounced re-renders to keep things smooth.',
-    features: [
-      'WebSocket-powered live messaging UI',
-      'Infinite scroll feed with optimistic post creation',
-      'Story carousel with auto-advance',
-      'Notification badge system',
-      'Accessible ARIA markup throughout',
-    ],
-    tags: ['React', 'TypeScript', 'Framer Motion', 'WebSocket Client', 'Context API'],
-    github: 'https://github.com/ahamad30626',
-    demo: 'https://github.com/ahamad30626',
-    accent: 'indigo',
+  },
+  {
+    id: 5,
+    title: 'Blood Banking System',
+    tagline: 'Healthcare management dashboard with real-time inventory UI',
+    description: 'Built the complete front-end for a blood banking platform — role-based dashboard views for donors, hospitals, and admins. Features animated blood stock gauges per blood type, a request approval workflow UI, donor registration forms with validation, and a responsive admin panel for inventory management.',
+    result: 'Role-based UI with animated blood inventory gauges, approval workflow, and fully responsive admin panel',
+    imageUrl: '/project4.png',
+    tags: ['React', 'Tailwind CSS', 'REST API Integration', 'React Hook Form', 'Chart.js'],
+    demoUrl: 'https://github.com/ahamad30626',
+    githubUrl: 'https://github.com/ahamad30626',
+    featured: false,
+    accentColor: '#ef4444',
   },
 ];
-
-const ACCENT = {
-  indigo: { badge: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20', border: 'hover:border-indigo-500/30' },
-  red:    { badge: 'bg-red-500/10 text-red-400 border-red-500/20',           border: 'hover:border-red-500/30' },
-};
-
-function ProjectCard({ project, i }) {
-  const [expanded, setExpanded] = useState(false);
-  const ac = ACCENT[project.accent] || ACCENT.indigo;
+function ProjectCard({ project, delay }) {
+  const accent = project.accentColor || null;
 
   return (
-    <motion.article
-      {...fade(0.05 * i)}
-      className={`bg-[#0e1018] border border-white/[0.08] rounded-2xl overflow-hidden transition-all duration-200 ${ac.border}`}
+    <article
+      className={`project-card reveal delay-${delay}`}
       aria-label={`Project: ${project.title}`}
+      style={accent ? { '--card-accent': accent } : {}}
     >
-      {/* Image */}
-      {project.image && (
-        <div className="relative h-48 overflow-hidden bg-[#0c0d14]">
-          <img
-            src={project.image}
-            alt={`${project.title} screenshot`}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1018] via-transparent to-transparent" />
-          {project.featured && (
-            <span className="absolute top-3 left-3 px-2.5 py-1 bg-indigo-600 text-white text-[11px] font-semibold rounded-md">
-              ⭐ Featured
-            </span>
-          )}
-          <span className={`absolute top-3 right-3 px-2.5 py-1 border text-[11px] font-medium rounded-md ${ac.badge}`}>
-            {project.status}
+      <div className="project-img-wrapper">
+        {project.imageUrl ? (
+          <>
+            <img src={project.imageUrl} alt={`${project.title} screenshot`} loading="lazy" />
+            <div className="project-img-overlay" aria-hidden="true" />
+          </>
+        ) : (
+          <div className="project-emoji-wrapper" aria-hidden="true"><span>⚡</span></div>
+        )}
+        {/* Featured badge — first project only */}
+        {project.id === 1 && (
+          <span className="project-featured-badge" aria-label="Featured project">⭐ Featured</span>
+        )}
+        {/* Healthcare badge — blood banking project */}
+        {project.accentColor && (
+          <span className="project-domain-badge" style={{ background: `${project.accentColor}cc` }} aria-label="Healthcare project">
+            🩸 Healthcare
           </span>
-        </div>
-      )}
+        )}
+      </div>
+      <div className="project-card-body">
+        <h3 className="project-title">{project.title}</h3>
+        <p className="project-tagline" style={accent ? { color: accent } : {}}>{project.tagline}</p>
+        <p className="project-desc">{project.description}</p>
 
-      <div className="p-6">
-        <h3 className="text-lg font-semibold text-slate-100 mb-1">{project.title}</h3>
-        <p className="text-sm text-slate-500 mb-3">{project.subtitle}</p>
-        <p className="text-sm text-slate-400 leading-relaxed mb-4">{project.description}</p>
-
-        {/* Challenge */}
-        <div className="mb-4 p-3.5 bg-[#131620] border border-white/[0.05] rounded-lg">
-          <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-1.5">Challenge I solved</p>
-          <p className="text-xs text-slate-400 leading-relaxed">{project.challenge}</p>
-        </div>
-
-        {/* Features toggle */}
-        <button
-          onClick={() => setExpanded(v => !v)}
-          className="text-xs text-indigo-400 hover:text-indigo-300 font-medium mb-3 flex items-center gap-1 transition-colors"
-          aria-expanded={expanded}
+        {/* Result / impact */}
+        <div
+          className="project-result"
+          aria-label="Project result"
+          style={accent ? { background: `${accent}10`, borderColor: `${accent}33`, color: '#fca5a5' } : {}}
         >
-          {expanded ? '▲ Hide features' : '▼ Key features'}
-        </button>
-        <AnimatePresence>
-          {expanded && (
-            <motion.ul
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden space-y-1.5 mb-4"
-            >
-              {project.features.map(f => (
-                <li key={f} className="flex items-start gap-2 text-xs text-slate-400">
-                  <span className="text-indigo-400 mt-0.5 flex-shrink-0">→</span>{f}
-                </li>
-              ))}
-            </motion.ul>
-          )}
-        </AnimatePresence>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-5">
-          {project.tags.map(t => (
-            <span key={t} className="px-2.5 py-1 bg-slate-800/60 border border-white/[0.05] text-slate-400 text-[11px] rounded-md">
-              {t}
-            </span>
-          ))}
+          <span className="project-result-icon" aria-hidden="true">📈</span>
+          <span>{project.result}</span>
         </div>
 
-        {/* Links */}
-        <div className="flex gap-3">
+        <div className="project-tags" aria-label="Technologies used">
+          {project.tags.map(t => <span key={t} className="tag">{t}</span>)}
+        </div>
+        <div className="project-links">
           <a
-            href={project.demo}
-            target="_blank" rel="noopener noreferrer"
-            className="flex-1 text-center py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg transition-colors"
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-link-btn demo"
             aria-label={`Live demo of ${project.title}`}
+            style={accent ? { background: `linear-gradient(135deg, ${accent}, #b91c1c)` } : {}}
           >
             Live Demo ↗
           </a>
           <a
-            href={project.github}
-            target="_blank" rel="noopener noreferrer"
-            className="flex-1 text-center py-2 border border-white/10 hover:border-white/20 text-slate-300 hover:text-slate-100 text-sm font-medium rounded-lg transition-colors"
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-link-btn github"
             aria-label={`GitHub repo for ${project.title}`}
           >
             GitHub ↗
           </a>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
 
+
 export default function Projects() {
+  const [projects] = useState(STATIC_PROJECTS);
+
   return (
-    <section id="projects" className="py-20 lg:py-28" aria-label="Projects section">
-      <div className="max-w-5xl mx-auto px-6">
-
-        <motion.p {...fade()} className="font-mono text-xs text-indigo-400 tracking-widest uppercase mb-3">
-          What I've built
-        </motion.p>
-        <motion.h2 {...fade(0.05)} className="text-3xl lg:text-4xl font-bold text-slate-100 mb-3">
-          Projects
-        </motion.h2>
-        <motion.p {...fade(0.1)} className="text-slate-400 mb-10 max-w-xl">
-          Real projects I've shipped. Each one taught me something specific — about React architecture,
-          UX decisions, or just plain problem-solving.
-        </motion.p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {PROJECTS.map((p, i) => <ProjectCard key={p.id} project={p} i={i} />)}
+    <section id="projects" aria-label="Projects section">
+      <div className="container">
+        <div className="projects-header">
+          <span className="section-label reveal" style={{ justifyContent: 'center' }}>Portfolio</span>
+          <h2 className="section-title reveal delay-1">Things I've Shipped</h2>
+          <p className="reveal delay-2" style={{ color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto', fontSize: '0.95rem' }}>
+            Real projects, real challenges, real things I learned. Not a collection of cloned tutorials.
+          </p>
         </div>
 
-        {/* View more on GitHub */}
-        <motion.div {...fade(0.2)} className="mt-10 text-center">
+        <div className="projects-grid">
+          {projects.map((project, i) => (
+            <ProjectCard key={project.id} project={project} delay={i + 1} />
+          ))}
+        </div>
+
+        {/* View more on GitHub CTA */}
+        <div className="projects-more reveal" style={{ textAlign: 'center', marginTop: '3rem' }}>
           <a
             href="https://github.com/ahamad30626"
-            target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-200 border border-white/[0.08] hover:border-white/[0.14] px-5 py-2.5 rounded-lg transition-all"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
             aria-label="View more projects on GitHub"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
-            See more on GitHub →
+            View More on GitHub
           </a>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );
