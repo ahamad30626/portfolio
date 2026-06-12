@@ -162,16 +162,6 @@ export default function Skills() {
             </div>
           </div>
         ))}
-
-        {/* GitHub streak stats */}
-        <div className="skills-github-streak reveal" aria-label="GitHub streak stats">
-          <img
-            src="https://streak-stats.demolab.com?user=ahamad30626&theme=tokyonight&hide_border=true&background=0f0f1a&stroke=6366f1&ring=6366f1&fire=f59e0b&currStreakLabel=f0f0f2"
-            alt="Ahamad's GitHub contribution streak"
-            loading="lazy"
-            className="github-streak-img"
-          />
-        </div>
       </div>
     </section>
   );

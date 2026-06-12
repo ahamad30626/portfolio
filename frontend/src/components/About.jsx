@@ -65,15 +65,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* GitHub stats image */}
-            <div className="github-stats-wrap reveal delay-4">
-              <img
-                src="https://github-readme-stats.vercel.app/api?username=ahamad30626&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0f0f1a&title_color=6366f1&icon_color=06b6d4&text_color=c9d1d9"
-                alt="Ahamad's GitHub contribution stats"
-                loading="lazy"
-                className="github-stats-img"
-              />
-            </div>
 
             {/* Tech chips — frontend only */}
             <div className="skills-chips reveal delay-4" aria-label="Tech skills">
