@@ -8,67 +8,72 @@ export default function About() {
           <div className="about-img-wrapper reveal-left">
             <div className="profile-glow" aria-hidden="true" />
             <div className="profile-frame">
-              <img src="/profile.png" alt="Ahamad — Frontend Developer" className="profile-img" loading="lazy" />
+              <img src="/profile.png" alt="Salam Ahamad Shaik — Frontend React Developer" className="profile-img" loading="lazy" />
             </div>
             <div className="profile-badge badge-available" aria-label="Available for work">
-              🟢 Available for Work
+              🟢 Available for Internships
             </div>
-            <div className="profile-badge badge-exp" aria-label="3 plus years learning">
-              <span className="badge-icon">🚀</span>
-              <span>3+ Years Learning</span>
+            <div className="profile-badge badge-exp" aria-label="3 plus years experience">
+              <span className="badge-icon">💼</span>
+              <span>Frontend Developer</span>
             </div>
           </div>
 
           {/* Bio */}
           <div className="about-text">
             <span className="section-label reveal">About Me</span>
-            <h2 className="section-title reveal delay-1">Curious by nature.<br />Builder by choice.</h2>
+            <h2 className="section-title reveal delay-1">Frontend React Developer<br />Building Scalable UI.</h2>
 
             <p className="about-bio reveal delay-2">
-              I started coding in 2021 — not from a bootcamp or a college syllabus, but from pure curiosity.
-              I wanted to understand <em>why</em> websites looked and felt the way they did, so I opened DevTools
-              one night and never really closed it.
+              I&apos;m <strong>Salam Ahamad Shaik</strong>, a passionate <strong>Frontend Developer</strong> specialising
+              in <strong>React.js</strong> and <strong>Next.js</strong>. I design and build
+              high-performance, scalable, and accessible web applications with a strong focus on
+              <strong> component architecture</strong>, <strong>state management</strong>, and
+              <strong> responsive UI/UX design</strong>.
             </p>
             <p className="about-bio reveal delay-2">
-              I specialise in building <strong>modern React applications</strong> — component-driven,
-              responsive, and optimised for real users. I care deeply about
-              {' '}<strong>UI performance</strong>, accessible interfaces, and experiences that just
-              <em> feel</em> right on every device.
+              With hands-on experience in <strong>TypeScript</strong>, <strong>Tailwind CSS</strong>,
+              <strong> Redux Toolkit</strong>, and <strong>REST API integration</strong>, I translate
+              complex requirements into clean, maintainable code. I follow industry best practices
+              including <strong>code splitting</strong>, <strong>lazy loading</strong>,
+              <strong> Web Accessibility (WCAG)</strong>, and <strong>SEO optimisation</strong> to
+              deliver production-ready frontend solutions.
             </p>
             <p className="about-bio reveal delay-2">
-              My goal is to craft interfaces that real people love using — not just apps that look good
-              in screenshots. I'm currently open to{' '}
-              <strong>frontend internships and freelance projects</strong> where design and engineering meet.
+              I am actively seeking <strong>frontend internship opportunities</strong> and
+              <strong> freelance collaborations</strong> where I can contribute to real-world
+              products, grow within an engineering team, and apply modern React ecosystems to
+              solve meaningful problems.
             </p>
 
+            {/* Currently Learning */}
             <div className="currently-learning reveal delay-3" aria-label="Currently learning">
               <span className="cl-icon">📚</span>
               <div>
                 <span className="cl-label">Currently Learning</span>
-                <span className="cl-value">Advanced React Patterns · Next.js App Router · Web Animations API · Accessibility (WCAG)</span>
+                <span className="cl-value">Next.js App Router · Advanced React Patterns · Web Performance Optimisation · WCAG Accessibility</span>
               </div>
             </div>
 
-            {/* Stats — honest numbers only */}
+            {/* Stats */}
             <div className="about-stats reveal delay-3">
               <div className="stat-item">
-                <div className="stat-number">20+</div>
-                <div className="stat-label">Projects Built</div>
+                <div className="stat-number">10+</div>
+                <div className="stat-label">Projects Shipped</div>
               </div>
               <div className="stat-item">
                 <div className="stat-number">3+</div>
-                <div className="stat-label">Years Learning</div>
+                <div className="stat-label">Years Coding</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">∞</div>
-                <div className="stat-label">Bugs Fixed</div>
+                <div className="stat-number">5+</div>
+                <div className="stat-label">Tech Stacks</div>
               </div>
             </div>
 
-
-            {/* Tech chips — frontend only */}
+            {/* Tech chips */}
             <div className="skills-chips reveal delay-4" aria-label="Tech skills">
-              {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'JavaScript', 'Redux', 'Framer Motion', 'Git'].map(c => (
+              {['React.js', 'Next.js', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'Redux', 'REST APIs', 'Git & GitHub'].map(c => (
                 <span key={c} className="chip">{c}</span>
               ))}
             </div>
