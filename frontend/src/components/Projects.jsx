@@ -15,42 +15,18 @@ const STATIC_PROJECTS = [
   },
   {
     id: 2,
-    title: 'ShopVerse E-Commerce',
-    tagline: 'Pixel-perfect e-commerce UI with smooth checkout experience',
-    description: 'Built a fully responsive e-commerce front-end with product listing, filtering, cart state management via Redux, and an animated multi-step checkout flow. Integrated REST APIs for live product data, implemented optimistic UI updates, and tuned Lighthouse performance scores above 95.',
-    result: 'Lighthouse performance score 95+, smooth animated checkout, fully responsive across all breakpoints',
+    title: 'CodeSync',
+    tagline: 'Real-time collaborative code editor for teams',
+    description: 'Built a real-time collaborative coding platform where multiple developers can write, edit, and review code simultaneously in the browser. Features live cursor tracking per user, syntax-highlighted multi-language support, a shared chat panel for inline code discussion, and instant sync across all connected sessions.',
+    result: 'Sub-50ms sync latency with live multi-user cursors, syntax highlighting for 10+ languages, and real-time chat',
     imageUrl: '/project2.png',
-    tags: ['Next.js', 'TypeScript', 'Redux Toolkit', 'Tailwind CSS', 'REST API'],
+    tags: ['React', 'TypeScript', 'WebSocket', 'Monaco Editor', 'Tailwind CSS', 'Context API'],
     demoUrl: 'https://github.com/ahamad30626',
     githubUrl: 'https://github.com/ahamad30626',
     featured: false,
   },
   {
     id: 3,
-    title: 'ConnectSphere Social',
-    tagline: 'Real-time social feed UI with live messaging and stories',
-    description: 'Designed and implemented the complete UI for a social platform — real-time message threads, animated post feed with infinite scroll, story carousel, notification badge system, and a full OAuth login flow. Focused on smooth transitions, accessible markup, and efficient component re-rendering.',
-    result: 'Sub-100ms UI updates with WebSocket integration, accessible ARIA markup, smooth 60fps animations',
-    imageUrl: '/project3.png',
-    tags: ['React', 'TypeScript', 'Framer Motion', 'WebSocket Client', 'Context API'],
-    demoUrl: 'https://github.com/ahamad30626',
-    githubUrl: 'https://github.com/ahamad30626',
-    featured: false,
-  },
-  {
-    id: 4,
-    title: 'DevFlow CLI Tool',
-    tagline: 'Interactive CLI with rich terminal UI for project scaffolding',
-    description: 'Built an interactive command-line tool with a rich terminal UI — animated spinners, colour-coded prompts, progress bars, and formatted output tables. Focused on intuitive UX within the terminal environment, consistent visual feedback, and a clean user interaction flow.',
-    result: 'Saves ~15 mins of project setup with guided interactive prompts and visual progress feedback',
-    imageUrl: '',
-    tags: ['Node.js', 'TypeScript', 'Inquirer.js', 'Chalk', 'CLI UX'],
-    demoUrl: 'https://github.com/ahamad30626',
-    githubUrl: 'https://github.com/ahamad30626',
-    featured: false,
-  },
-  {
-    id: 5,
     title: 'Blood Banking System',
     tagline: 'Healthcare management dashboard with real-time inventory UI',
     description: 'Built the complete front-end for a blood banking platform — role-based dashboard views for donors, hospitals, and admins. Features animated blood stock gauges per blood type, a request approval workflow UI, donor registration forms with validation, and a responsive admin panel for inventory management.',
@@ -63,6 +39,7 @@ const STATIC_PROJECTS = [
     accentColor: '#ef4444',
   },
 ];
+
 function ProjectCard({ project, delay }) {
   const accent = project.accentColor || null;
 
