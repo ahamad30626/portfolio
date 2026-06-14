@@ -48,11 +48,7 @@ export default function Hero() {
       <div className="container">
         <div className="hero-content">
 
-          {/* Availability pill */}
-          <div className="hero-availability reveal">
-            <span className="availability-dot" aria-hidden="true" />
-            <span>Available for Internships &amp; Freelance</span>
-          </div>
+
 
           {/* Name */}
           <h1 className="hero-name" aria-label="Salam Ahamad Shaik">

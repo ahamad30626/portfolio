@@ -10,9 +10,6 @@ export default function About() {
             <div className="profile-frame">
               <img src="/profile.png" alt="Salam Ahamad Shaik — Frontend React Developer" className="profile-img" loading="lazy" />
             </div>
-            <div className="profile-badge badge-available" aria-label="Available for work">
-              🟢 Available for Internships
-            </div>
             <div className="profile-badge badge-exp" aria-label="3 plus years experience">
               <span className="badge-icon">💼</span>
               <span>Frontend Developer</span>
