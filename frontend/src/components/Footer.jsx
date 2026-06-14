@@ -4,7 +4,7 @@ export default function Footer() {
     <footer role="contentinfo" className="site-footer">
       <div className="container">
         <div className="footer-inner">
-          <p className="footer-brand">Ahamad.dev</p>
+
           <p className="footer-text">
             Designed &amp; Built by <strong>Salam Ahamad Shaik</strong> · {year}
           </p>

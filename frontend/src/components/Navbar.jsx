@@ -42,7 +42,7 @@ export default function Navbar() {
         <div className="container">
           <nav className="nav-inner" aria-label="Main navigation">
             <a href="#hero" className="nav-logo" onClick={() => handleNavClick('#hero')} aria-label="Home">
-              Ahamad.dev
+              &lt;/&gt;
             </a>
 
             <ul className="nav-links" role="list">
