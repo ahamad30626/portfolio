@@ -2,9 +2,9 @@
 
 > A high-performance personal portfolio built with **React + Node.js** on the frontend and **Java Spring Boot** on the backend.
 
-![Portfolio Preview](frontend/public/profile.png)
 
 ---
+
 
 ## 🏗️ Tech Stack
 
