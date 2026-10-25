@@ -154,64 +154,84 @@ header.scrolled {
   display: block;
 }
 
-/* ── Bottom + side vignette — fades image into black so content reads ── */
+/* ── Vignette: solid black at very bottom, fade sides lightly ── */
 .hero-vignette {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background:
-    /* heavy bottom fade */
-    linear-gradient(to top,  #0a0a0a 0%, #0a0a0a 18%, rgba(10,10,10,0.7) 42%, transparent 65%),
-    /* left edge fade (text area) */
-    linear-gradient(to right, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 28%, transparent 55%),
-    /* right edge fade (stats area) */
-    linear-gradient(to left,  rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.3) 28%, transparent 55%),
-    /* top fade */
-    linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, transparent 22%);
+    /* solid black at bottom 25%, then soft fade up to 55% */
+    linear-gradient(to top, #0a0a0a 0%, #0a0a0a 22%, rgba(10,10,10,0.85) 38%, rgba(10,10,10,0.3) 55%, transparent 72%),
+    /* left strip — behind name column */
+    linear-gradient(to right, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.4) 22%, transparent 44%),
+    /* right strip — behind stats column */
+    linear-gradient(to left, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.4) 22%, transparent 44%),
+    /* top strip — behind corner labels */
+    linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, transparent 18%);
 }
 
-/* Layout above bg image + vignette */
+/* ── Hero inner: two columns pinned to the very bottom ── */
 .hero-inner {
   position: relative; z-index: 3; width: 100%;
-  display: grid; grid-template-columns: 1fr 1fr;
-  align-items: end; min-height: 100vh;
-  padding-bottom: 80px; padding-top: var(--nav-height);
-  max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px;
+  /* The image person fills center; our text lives in two side columns at the bottom */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  min-height: 100vh;
+  /* push content down below the person — sits in the black band at the bottom */
+  padding-top: var(--nav-height);
+  padding-bottom: 52px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 /* Corner labels */
 .hero-top-left {
-  position: absolute; top: calc(var(--nav-height) + 24px); left: 24px;
-  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--grey); line-height: 1.8; z-index: 4;
+  position: absolute; top: calc(var(--nav-height) + 28px); left: 40px;
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); line-height: 1.9; z-index: 4;
 }
-.hero-top-left strong { display: block; color: var(--crimson); font-weight: 600; }
+.hero-top-left strong { display: block; color: var(--crimson); font-weight: 600; letter-spacing: 0.2em; }
 .hero-top-right {
-  position: absolute; top: calc(var(--nav-height) + 24px); right: 24px;
-  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--grey); display: flex; align-items: center; gap: 8px; z-index: 4;
+  position: absolute; top: calc(var(--nav-height) + 28px); right: 40px;
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 8px; z-index: 4;
 }
 .hero-spark { color: var(--crimson); }
 
-/* Left content */
-.hero-left { padding: 0 24px; display: flex; flex-direction: column; justify-content: flex-end; }
+/* ── LEFT: greeting + name + role + bio + available ── */
+.hero-left {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-right: 12px;
+}
 .hero-greeting {
-  font-family: var(--font-script); font-size: clamp(1.8rem, 3vw, 2.6rem);
-  color: var(--white); margin-bottom: -4px; display: block;
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  color: var(--white); margin-bottom: 0px; display: block; line-height: 1.2;
 }
 .hero-name {
-  font-family: var(--font-heading); font-size: clamp(3.4rem, 7.5vw, 7rem);
-  line-height: 0.92; letter-spacing: 0.01em; color: var(--white); margin-bottom: 12px;
+  font-family: var(--font-heading);
+  /* Slightly smaller so it doesn't overlap the person in the center */
+  font-size: clamp(2.6rem, 5.5vw, 5.5rem);
+  line-height: 0.9; letter-spacing: 0.02em; color: var(--white);
+  margin-bottom: 10px; margin-top: 4px;
+  /* subtle text-shadow so it reads over any image bleed */
+  text-shadow: 0 2px 24px rgba(0,0,0,0.9);
 }
 .hero-role {
-  font-family: var(--font-heading); font-size: clamp(0.9rem, 2vw, 1.5rem);
-  letter-spacing: 0.04em; color: var(--crimson); margin-bottom: 20px;
+  font-family: var(--font-heading);
+  font-size: clamp(0.72rem, 1.4vw, 1.1rem);
+  letter-spacing: 0.1em; color: var(--crimson); margin-bottom: 16px;
 }
-.hero-bio { font-size: 0.82rem; line-height: 1.75; color: var(--grey); max-width: 360px; margin-bottom: 24px; }
+.hero-bio {
+  font-size: 0.78rem; line-height: 1.75; color: rgba(255,255,255,0.55);
+  max-width: 320px; margin-bottom: 20px;
+}
 .hero-available {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey);
+  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
 }
 .hero-available-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--crimson);
+  width: 6px; height: 6px; border-radius: 50%; background: var(--crimson); flex-shrink: 0;
   animation: pulseDot 2s ease infinite;
 }
 @keyframes pulseDot {
@@ -219,30 +239,38 @@ header.scrolled {
   50%      { box-shadow: 0 0 0 8px rgba(196,18,26,0); }
 }
 
-/* Right col — badge + stats */
+/* ── RIGHT: badge (hide on smaller screens) + stats ── */
 .hero-right {
-  display: flex; flex-direction: column; align-items: flex-end;
-  justify-content: flex-end; padding: 0 24px 0 0;
+  display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: flex-end;
+  padding-left: 12px;
 }
 .hero-badge {
-  width: 130px; height: 130px; border-radius: 50%;
+  width: 118px; height: 118px; border-radius: 50%;
   border: 1px solid var(--crimson-border);
   display: flex; align-items: center; justify-content: center;
-  text-align: center; font-size: 0.7rem; color: var(--grey);
-  line-height: 1.5; margin-bottom: 40px; padding: 16px; position: relative;
+  text-align: center; font-size: 0.65rem; color: rgba(255,255,255,0.5);
+  line-height: 1.55; margin-bottom: 28px; padding: 14px; position: relative;
 }
 .hero-badge::before {
-  content: '✦'; position: absolute; top: -10px; left: 50%;
-  transform: translateX(-50%); color: var(--crimson); font-size: 1rem;
+  content: '✦'; position: absolute; top: -9px; left: 50%;
+  transform: translateX(-50%); color: var(--crimson); font-size: 0.9rem;
 }
-.hero-stats { width: 100%; max-width: 210px; }
-.hero-stat { padding: 18px 0; border-top: 1px solid var(--crimson-border); text-align: right; }
-.hero-stat:last-child { border-bottom: 1px solid var(--crimson-border); }
+.hero-stats { width: 100%; max-width: 200px; }
+.hero-stat {
+  padding: 14px 0; border-top: 1px solid rgba(196,18,26,0.25);
+  text-align: right;
+}
+.hero-stat:last-child { border-bottom: 1px solid rgba(196,18,26,0.25); }
 .hero-stat-num {
-  font-family: var(--font-heading); font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+  font-family: var(--font-heading); font-size: clamp(2rem, 3.2vw, 3rem);
   line-height: 1; color: var(--crimson); letter-spacing: 0.01em;
+  text-shadow: 0 0 32px rgba(196,18,26,0.35);
 }
-.hero-stat-label { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); margin-top: 4px; }
+.hero-stat-label {
+  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-top: 3px;
+}
 
 /* ══════════════════════════════════════════════
    PROJECTS
